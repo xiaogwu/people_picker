@@ -4,7 +4,7 @@
 # [x] 1. Read file into Array
 # [x] 2. Get random names from array based on -n flag
 # [x] 3. Create group of n people based on -g flag
-# 4. Create n groups based on -G flag
+# [x] 4. Create n groups based on -G flag
 # Bonus 1 - Store/retrieve array in a json file
 # Bonus 2 - History
 
@@ -32,6 +32,13 @@ def output_groups(names_array, size_of_group)
 	end
 end
 
+def print_usage
+	puts $0 + ": illegal option " + ARGV[0]
+	puts "Usage: " + $0
+	puts "       " + $0 + " -n [N]"
+	puts "       " + $0 + " -g [N]"
+	puts "       " + $0 + " -G [N]"
+end
 
 # flag logic
 # Default bahavior is to print one random person
@@ -39,7 +46,11 @@ if ARGV.size == 0 then
 	randomize(names)
 	# Print first person from randomized array
 	puts "Winner is " + names[0]
-# Flags specified
+# Only one arg provided
+elsif ARGV.size == 1 then
+	puts "Please provide two arguments"
+	print_usage
+# Proper Flags specified
 elsif ARGV.size == 2 then
 	case ARGV[0]
 	when '-n' then
@@ -61,11 +72,7 @@ elsif ARGV.size == 2 then
 		output_groups(names, size_of_group)
 	else
 		# Flag error provide Usage
-		puts $0 + ": illegal option " + ARGV[0]
-		puts "Usage: " + $0
-		puts "       " + $0 + " -n [N]"
-		puts "       " + $0 + " -g [N]"
-		puts "       " + $0 + " -G [N]"
+		print_usage
 	end
 end
 
