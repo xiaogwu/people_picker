@@ -34,26 +34,39 @@ end
 
 
 # flag logic
-case ARGV[0]
-when '-n' then
-	# Random number flag selected
+# Default bahavior is to print one random person
+if ARGV.size == 0 then
 	randomize(names)
-	puts "Number of people specified exceed class size" if (ARGV[1].to_i - 1) > names.length
-	puts names[0..ARGV[1].to_i - 1] unless (ARGV[1].to_i - 1) > names.length
-when '-g' then
-	# Group of n flag selected
-	randomize(names)
-	size_of_group = ARGV[1].to_i
-	output_groups(names, size_of_group)
-when '-G' then
-	# n Groups flag selected
-	randomize(names)
-	size_of_group = (names.size / ARGV[1].to_i).ceil + 1
-	output_groups(names, size_of_group)
-else
-	puts "No flag provided, provide usage"
+	# Print first person from randomized array
+	puts "Winner is " + names[0]
+# Flags specified
+elsif ARGV.size == 2 then
+	case ARGV[0]
+	when '-n' then
+		# Random number flag selected
+		randomize(names)
+		puts "Number of people specified exceed class size" if (ARGV[1].to_i - 1) > names.length
+		puts ARGV[1] + " Random people from class" unless (ARGV[1].to_i - 1) > names.length
+		puts "=============================" unless (ARGV[1].to_i - 1) > names.length
+		puts names[0..ARGV[1].to_i - 1] unless (ARGV[1].to_i - 1) > names.length
+	when '-g' then
+		# Group of n flag selected
+		randomize(names)
+		size_of_group = ARGV[1].to_i
+		output_groups(names, size_of_group)
+	when '-G' then
+		# n Groups flag selected
+		randomize(names)
+		size_of_group = (names.size / ARGV[1].to_i).ceil + 1
+		output_groups(names, size_of_group)
+	else
+		# Flag error provide Usage
+		puts $0 + ": illegal option " + ARGV[0]
+		puts "Usage: " + $0
+		puts "       " + $0 + " -n [N]"
+		puts "       " + $0 + " -g [N]"
+		puts "       " + $0 + " -G [N]"
+	end
 end
-
-#puts names
 
 
