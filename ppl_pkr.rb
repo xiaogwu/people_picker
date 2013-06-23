@@ -8,7 +8,7 @@
 # Bonus 1 - Store/retrieve array in a json file
 # Bonus 2 - History
 
-filename = 'Names.txt'
+filename = '/Users/xiaogwu/Code/ga-day01/people_picker/Names.txt'
 names = []
 # Open filename in read mode and for each line push into array
 File.open(filename, 'r').each_line do |line|
@@ -33,11 +33,15 @@ def output_groups(names_array, size_of_group)
 end
 
 def print_usage
-	puts $0 + ": illegal option " + ARGV[0]
 	puts "Usage: " + $0
-	puts "       " + $0 + " -n [N]"
-	puts "       " + $0 + " -g [N]"
-	puts "       " + $0 + " -G [N]"
+	puts "       " + $0 + " -n N (N number of random people)"
+	puts "       " + $0 + " -g N (Groups of N random people)"
+	puts "       " + $0 + " -G N (N Groups of random people)"
+end
+
+def print_error
+	puts $0 + ": illegal option " + ARGV[0]
+	print_usage
 end
 
 # flag logic
@@ -48,8 +52,23 @@ if ARGV.size == 0 then
 	puts "Winner is " + names[0]
 # Only one arg provided
 elsif ARGV.size == 1 then
-	puts "Please provide two arguments"
-	print_usage
+	case ARGV[0]
+	when '-h' then
+		print_usage
+	when '-?' then
+		print_usage
+	when '-n' then
+		puts ARGV[0] + " requires second argument"
+		print_usage
+	when '-g' then
+		puts ARGV[0] + " requires second argument"
+		print_usage
+	when '-G' then
+		puts ARGV[0] + " requires second argument"
+		print_usage
+	else
+		print_error
+	end
 # Proper Flags specified
 elsif ARGV.size == 2 then
 	case ARGV[0]
@@ -72,7 +91,7 @@ elsif ARGV.size == 2 then
 		output_groups(names, size_of_group)
 	else
 		# Flag error provide Usage
-		print_usage
+		print_error
 	end
 end
 
